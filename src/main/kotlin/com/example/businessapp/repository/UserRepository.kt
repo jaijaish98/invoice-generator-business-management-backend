@@ -9,5 +9,8 @@ import java.util.*
 interface UserRepository : JpaRepository<User, UUID> {
     fun findByEmail(email: String): User?
     fun existsByEmail(email: String): Boolean
+    fun existsByMobileNumber(mobileNumber: String): Boolean
+    fun existsByEmailAndMobileNumber(email: String, mobileNumber: String): Boolean
+    fun findByEmailOrMobileNumber(email: String, mobileNumber: String): User?
 }
 

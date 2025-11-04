@@ -61,5 +61,37 @@ class AuthController(
             )
         )
     }
+
+    @PutMapping("/change-password")
+    @Operation(summary = "Change password", description = "Change password for authenticated user")
+    @SwaggerApiResponse(responseCode = "200", description = "Password changed successfully")
+    @SwaggerApiResponse(responseCode = "400", description = "Invalid current password or validation error")
+    @SwaggerApiResponse(responseCode = "401", description = "Unauthorized")
+    fun changePassword(@Valid @RequestBody request: ChangePasswordRequest): ResponseEntity<ApiResponse<UserResponse>> {
+        val user = authService.changePassword(request)
+        return ResponseEntity.ok(
+            ApiResponse(
+                success = true,
+                data = user,
+                message = "Password changed successfully"
+            )
+        )
+    }
+
+    @PutMapping("/account")
+    @Operation(summary = "Update account settings", description = "Update user account information (name, email, mobile number, password)")
+    @SwaggerApiResponse(responseCode = "200", description = "Account updated successfully")
+    @SwaggerApiResponse(responseCode = "400", description = "Invalid input or validation error")
+    @SwaggerApiResponse(responseCode = "401", description = "Unauthorized")
+    fun updateAccount(@Valid @RequestBody request: UpdateAccountRequest): ResponseEntity<ApiResponse<UserResponse>> {
+        val user = authService.updateAccount(request)
+        return ResponseEntity.ok(
+            ApiResponse(
+                success = true,
+                data = user,
+                message = "Account updated successfully"
+            )
+        )
+    }
 }
 
